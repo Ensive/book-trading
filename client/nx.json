@@ -1,0 +1,24 @@
+{
+  "npmScope": "client",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "book-trading": {
+      "tags": []
+    },
+    "book-trading-e2e": {
+      "tags": []
+    },
+    "material": {
+      "tags": []
+    },
+    "core-data": {
+      "tags": []
+    }
+  }
+}
