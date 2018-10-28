@@ -5,20 +5,20 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { NxModule } from '@nrwl/nx';
-import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@client/material';
 import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    AppRoutingModule,
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     BooksModule,
     MaterialModule,
-    NxModule.forRoot(),
-    RouterModule.forRoot([], { initialNavigation: 'enabled' })
+    // NxModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

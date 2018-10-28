@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Book } from './book.model';
-import { BooksService } from '@client/core-data';
+import { Book, BooksService } from '@client/core-data';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+// import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-books',
@@ -17,7 +16,7 @@ export class BooksComponent implements OnInit {
     description: ''
   };
 
-  booksList$; //Observable<Book[]>;
+  booksList$; // Observable<Book[]>
 
   constructor(private http: HttpClient, private booksService: BooksService) {}
 
@@ -39,29 +38,32 @@ export class BooksComponent implements OnInit {
     this.selectBook(emptyBook);
   }
 
+  // TODO: sorting
   getBooks() {
     this.booksList$ = this.booksService.all();
   }
 
   saveBook(book) {
     if (book.id) {
-      this.booksList = this.booksList.map(b => {
-        if (b.id === book.id) {
-          return book;
-        }
-
-        return b;
-      });
+      this.updateBook(book);
     } else {
-      book.id =
-        '_' +
-        Math.random()
-          .toString(36)
-          .substr(2, 9);
-      this.booksList.unshift(book);
+      this.createBook(book);
     }
+  }
 
-    this.resetBook();
+  createBook(book) {
+    book.id = getId();
+    this.booksService.create(book).subscribe(() => {
+      this.getBooks();
+      this.resetBook();
+    });
+  }
+
+  updateBook(book) {
+    this.booksService.update(book).subscribe(() => {
+      this.getBooks();
+      this.resetBook();
+    });
   }
 
   editBook(book) {
@@ -69,8 +71,20 @@ export class BooksComponent implements OnInit {
   }
 
   deleteBook(bookId) {
-    this.booksList = this.booksList.filter(({ id }) => {
-      return id !== bookId;
-    });
+    this.booksService
+      .delete(bookId)
+      .subscribe(
+        () => this.getBooks(),
+        error => console.error('Something wrong happened', error)
+      );
   }
+}
+
+function getId() {
+  return (
+    '_' +
+    Math.random()
+      .toString(36)
+      .substr(2, 9)
+  );
 }

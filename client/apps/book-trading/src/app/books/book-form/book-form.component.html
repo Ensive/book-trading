@@ -1,0 +1,25 @@
+<mat-card class="book-form">
+  <mat-card-header>
+    <mat-card-title>
+      <h1>
+        <span *ngIf="currentBook.id">{{ originalTitle }}</span>
+        <span *ngIf="!currentBook.id">Add book</span>
+      </h1>
+    </mat-card-title>
+  </mat-card-header>
+  <form (submit)="handleSaveBook(currentBook)">
+    <mat-card-content>
+      <mat-form-field class="full-width">
+        <input matInput [(ngModel)]="currentBook.title" placeholder="Title" type="text" id="title" name="title" />
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput [(ngModel)]="currentBook.subtitle" placeholder="Subtitle" type="text" id="subtitle" name="subtitle" />
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput [(ngModel)]="currentBook.description" placeholder="Description" type="text" id="description" name="description"
+        />
+      </mat-form-field>
+      <button mat-button color="primary" type="submit">SAVE</button>
+    </mat-card-content>
+  </form>
+</mat-card>
