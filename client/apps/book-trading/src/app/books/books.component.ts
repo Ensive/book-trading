@@ -21,7 +21,7 @@ export class BooksComponent implements OnInit {
   constructor(private http: HttpClient, private booksService: BooksService) {}
 
   ngOnInit() {
-    this.getBooks();
+    // this.getBooks();
   }
 
   selectBook(book) {
@@ -39,45 +39,45 @@ export class BooksComponent implements OnInit {
   }
 
   // TODO: sorting
-  getBooks() {
-    this.booksList$ = this.booksService.all();
-  }
+  // getBooks() {
+  //   this.booksList$ = this.booksService.all();
+  // }
 
-  saveBook(book) {
-    if (book.id) {
-      this.updateBook(book);
-    } else {
-      this.createBook(book);
-    }
-  }
+  // saveBook(book) {
+  //   if (book.id) {
+  //     this.updateBook(book);
+  //   } else {
+  //     this.createBook(book);
+  //   }
+  // }
 
-  createBook(book) {
-    book.id = getId();
-    this.booksService.create(book).subscribe(() => {
-      this.getBooks();
-      this.resetBook();
-    });
-  }
+  // createBook(book) {
+  //   book.id = getId();
+  //   this.booksService.create(book).subscribe(() => {
+  //     this.getBooks();
+  //     this.resetBook();
+  //   });
+  // }
 
-  updateBook(book) {
-    this.booksService.update(book).subscribe(() => {
-      this.getBooks();
-      this.resetBook();
-    });
-  }
+  // updateBook(book) {
+  //   this.booksService.update(book).subscribe(() => {
+  //     this.getBooks();
+  //     this.resetBook();
+  //   });
+  // }
 
-  editBook(book) {
-    this.selectBook(book);
-  }
+  // editBook(book) {
+  //   this.selectBook(book);
+  // }
 
-  deleteBook(bookId) {
-    this.booksService
-      .delete(bookId)
-      .subscribe(
-        () => this.getBooks(),
-        error => console.error('Something wrong happened', error)
-      );
-  }
+  // deleteBook(bookId) {
+  //   this.booksService
+  //     .delete(bookId)
+  //     .subscribe(
+  //       () => this.getBooks(),
+  //       error => console.error('Something wrong happened', error)
+  //     );
+  // }
 }
 
 function getId() {

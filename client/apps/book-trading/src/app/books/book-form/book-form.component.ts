@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Book } from '@client/core-data';
+import { Book, BooksService } from '@client/core-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-form',
@@ -7,7 +8,13 @@ import { Book } from '@client/core-data';
   styleUrls: ['./book-form.component.scss']
 })
 export class BookFormComponent implements OnInit {
-  currentBook: Book;
+  currentBook: Book = {
+    id: '',
+    title: '',
+    subtitle: '',
+    description: ''
+  };
+
   originalTitle;
   @Output() saved = new EventEmitter();
 
@@ -19,17 +26,44 @@ export class BookFormComponent implements OnInit {
     this.currentBook = { ...value };
   }
 
-  constructor() {}
+  constructor(private booksService: BooksService, private router: Router) {}
 
   ngOnInit() {}
 
-  handleSaveBook(book) {
-    this.saved.emit(book);
+
+  saveBook(book) {
+    if (book.id) {
+      // this.updateBook(book);
+    } else {
+      this.createBook(book);
+    }
   }
+
+  createBook(book) {
+    book.id = getId();
+    this.booksService.create(book).subscribe(() => {
+      this.router.navigate(['books']);
+      // this.getBooks();
+      // this.resetBook();
+    });
+  }
+
+  // handleSaveBook(book) {
+  //   this.saved.emit(book);
+  // }
 
   getTitle() {
     if (this.currentBook && this.currentBook.title) {
       return this.currentBook.title;
     }
   }
+}
+
+function getId() {
+  return (
+    '_' +
+    Math.random()
+      .toString(36)
+      .substr(2, 9)
+  );
 }

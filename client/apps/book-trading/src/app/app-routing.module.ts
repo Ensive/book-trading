@@ -1,3 +1,4 @@
+import { BooksListComponent } from './books/books-list/books-list.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BooksComponent } from './books/books.component';
@@ -9,16 +10,17 @@ import { BookFormComponent } from './books/book-form/book-form.component';
 const routes: Routes = [
   {
     path: '',
-    component: BooksComponent,
+    redirectTo: '/books',
+    pathMatch: 'full'
   },
   {
     path: 'books',
-    component: BooksComponent
+    component: BooksListComponent
   },
-  // {
-  //   path: 'books/add',
-  //   component: BookFormComponent
-  // },
+  {
+    path: 'books/add',
+    component: BookFormComponent
+  },
   {
     path: '**',
     redirectTo: '/',
