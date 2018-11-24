@@ -1,4 +1,20 @@
 {
+  "users": [
+    {
+      "firstName": "1",
+      "lastName": "1",
+      "email": "a@com.com",
+      "password": "123123",
+      "id": 1
+    },
+    {
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "password": "",
+      "id": 2
+    }
+  ],
   "books": [
     {
       "id": "9781491950296",

@@ -3,17 +3,20 @@ import { Routes, RouterModule } from '@angular/router';
 import { BookFormComponent } from './book-form/book-form.component';
 import { BooksListComponent } from './books-list/books-list.component';
 
-console.log('BookFormComponent', BookFormComponent);
 const bookRoutes: Routes = [
-  // TODO: Investigate children routing;
-  // {
-  //   path: 'books',
-  //   component: BooksListComponent
-  // },
-  // {
-  //   path: 'books/add',
-  //   component: BookFormComponent
-  // }
+  {
+    path: 'books',
+    children: [
+      {
+        path: '',
+        component: BooksListComponent
+      },
+      {
+        path: 'add',
+        component: BookFormComponent
+      }
+    ]
+  }
 ];
 
 @NgModule({
