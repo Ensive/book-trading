@@ -11,8 +11,8 @@
       <button mat-button>SELECT</button>
       <button mat-button>LIKE</button>
       <button mat-button>SHARE</button>
-      <button mat-button (click)="handleEditBook(book)">EDIT</button>
-      <button mat-button (click)="handleDeleteBook(book.id)">DELETE <small>(for admins only)</small></button>
+      <button mat-button (click)="editBook(book)">EDIT</button>
+      <button mat-button (click)="deleteBook(book.id)">DELETE <small>(for admins only)</small></button>
     </mat-card-actions>
   </mat-card>
 </div>

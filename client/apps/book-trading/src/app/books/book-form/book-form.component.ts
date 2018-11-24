@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Book, BooksService } from '@client/core-data';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-book-form',
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./book-form.component.scss']
 })
 export class BookFormComponent implements OnInit {
+  originalTitle;
   currentBook: Book = {
     id: '',
     title: '',
@@ -15,47 +16,38 @@ export class BookFormComponent implements OnInit {
     description: ''
   };
 
-  originalTitle;
-  @Output() saved = new EventEmitter();
+  constructor(
+    private booksService: BooksService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
-  // TODO: @Input set (explore)
-  @Input()
-  set book(value) {
-    // TODO: do we have problems here?
-    if (value) this.originalTitle = value.title;
-    this.currentBook = { ...value };
+  ngOnInit() {
+    this.route.params.subscribe((params: Book) => {
+      this.currentBook = { ...params };
+      this.originalTitle = params.title;
+    });
   }
-
-  constructor(private booksService: BooksService, private router: Router) {}
-
-  ngOnInit() {}
-
 
   saveBook(book) {
     if (book.id) {
-      // this.updateBook(book);
+      this.updateBook(book);
     } else {
       this.createBook(book);
     }
   }
 
-  createBook(book) {
-    book.id = getId();
-    this.booksService.create(book).subscribe(() => {
-      this.router.navigate(['books']);
-      // this.getBooks();
-      // this.resetBook();
-    });
+  updateBook(book) {
+    this.booksService.update(book).subscribe(() => this.redirectToBooks());
   }
 
-  // handleSaveBook(book) {
-  //   this.saved.emit(book);
-  // }
+  createBook(book) {
+    book.id = getId();
+    this.booksService.create(book).subscribe(() => this.redirectToBooks());
+  }
 
-  getTitle() {
-    if (this.currentBook && this.currentBook.title) {
-      return this.currentBook.title;
-    }
+  redirectToBooks() {
+    this.router.navigate(['books']);
   }
 }
 

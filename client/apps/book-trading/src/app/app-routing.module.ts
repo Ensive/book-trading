@@ -1,9 +1,7 @@
 import { BooksListComponent } from './books/books-list/books-list.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BooksComponent } from './books/books.component';
 import { BookFormComponent } from './books/book-form/book-form.component';
-// import { CustomersComponent } from './customers/customers.component';
 
 // ROUTES
 // TODO: lazy loading stuff (angular routes)
@@ -22,6 +20,10 @@ const routes: Routes = [
     component: BookFormComponent
   },
   {
+    path: 'sign-up',
+    component: BookFormComponent
+  },
+  {
     path: '**',
     redirectTo: '/',
     pathMatch: 'full'
@@ -29,7 +31,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
+  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
