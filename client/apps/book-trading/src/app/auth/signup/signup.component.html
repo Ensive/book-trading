@@ -1,0 +1,50 @@
+<mat-card class="user-form">
+  <mat-card-header>
+    <mat-card-title> <h1>Create account</h1> </mat-card-title>
+  </mat-card-header>
+  <form (submit)="createUser(user)">
+    <mat-card-content>
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [(ngModel)]="user.firstName"
+          placeholder="First name"
+          type="text"
+          id="firstName"
+          name="firstName"
+        />
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [(ngModel)]="user.lastName"
+          placeholder="Last name"
+          type="text"
+          id="lastName"
+          name="lastName"
+        />
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [(ngModel)]="user.email"
+          placeholder="Email"
+          type="email"
+          id="email"
+          name="email"
+        />
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [(ngModel)]="user.password"
+          placeholder="Password"
+          type="password"
+          id="password"
+          name="password"
+        />
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Create</button>
+    </mat-card-content>
+  </form>
+</mat-card>
