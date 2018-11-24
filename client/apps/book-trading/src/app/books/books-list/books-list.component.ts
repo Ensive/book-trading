@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Book, BooksService } from '@client/core-data';
+import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { BooksService } from '@client/core-data';
 
 @Component({
   selector: 'app-books-list',
@@ -9,7 +10,7 @@ import { Book, BooksService } from '@client/core-data';
 export class BooksListComponent implements OnInit {
   booksList$;
 
-  constructor(private booksService: BooksService) {}
+  constructor(private router: Router, private booksService: BooksService) {}
 
   ngOnInit() {
     this.getBooks();
@@ -17,6 +18,10 @@ export class BooksListComponent implements OnInit {
 
   getBooks() {
     this.booksList$ = this.booksService.all();
+  }
+
+  editBook(book) {
+    this.router.navigate(['books/add', book]);
   }
 
   deleteBook(bookId) {
@@ -27,24 +32,4 @@ export class BooksListComponent implements OnInit {
         error => console.error('Something wrong happened', error)
       );
   }
-
-
-
-
-  // @Input() booksList: Book[];
-  // @Output() edited = new EventEmitter();
-  // @Output() deleted = new EventEmitter();
-
-  // TODO: discover
-  // EventEmitter - naming convention
-  // Output Angular 2 - naming
-  // Angular general conventions
-
-  // handleEditBook(book) {
-  //   this.edited.emit(book);
-  // }
-
-  // handleDeleteBook(bookId) {
-  //   this.deleted.emit(bookId);
-  // }
 }
