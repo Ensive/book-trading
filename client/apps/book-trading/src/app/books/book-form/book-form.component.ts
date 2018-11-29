@@ -42,7 +42,8 @@ export class BookFormComponent implements OnInit {
   }
 
   createBook(book) {
-    book.id = getId();
+    // book.id = getId();
+
     this.booksService.create(book).subscribe(() => this.redirectToBooks());
   }
 
@@ -51,11 +52,11 @@ export class BookFormComponent implements OnInit {
   }
 }
 
-function getId() {
-  return (
-    '_' +
-    Math.random()
-      .toString(36)
-      .substr(2, 9)
-  );
-}
+// function getId() {
+//   return (
+//     '_' +
+//     Math.random()
+//       .toString(36)
+//       .substr(2, 9)
+//   );
+// }
