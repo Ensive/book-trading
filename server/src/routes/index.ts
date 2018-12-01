@@ -28,6 +28,7 @@ export class Routes {
 
     app.route('/books').get(this.bookController.getBooks);
     app.route('/books/:bookId').get(this.bookController.getBookWithID);
-    app.route('/books').post(this.bookController.addNewBook)
+    app.route('/books').post(this.bookController.addNewBook);
+    app.route('/books/:bookId').delete(this.bookController.deleteBook);
   }
 }

@@ -2,6 +2,10 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { BooksService } from '@client/core-data';
 
+interface Response {
+  message: string;
+}
+
 @Component({
   selector: 'app-books-list',
   templateUrl: './books-list.component.html',
@@ -9,6 +13,8 @@ import { BooksService } from '@client/core-data';
 })
 export class BooksListComponent implements OnInit {
   booksList$;
+  message;
+  isMessageVisible = false;
 
   constructor(private router: Router, private booksService: BooksService) {}
 
@@ -25,11 +31,23 @@ export class BooksListComponent implements OnInit {
   }
 
   deleteBook(bookId) {
-    this.booksService
-      .delete(bookId)
-      .subscribe(
-        () => this.getBooks(),
-        error => console.error('Something wrong happened', error)
-      );
+    this.booksService.delete(bookId).subscribe(
+      (response: Response) => {
+        this.showMessage(response.message);
+        setTimeout(this.hideMessage, 3000);
+        this.getBooks();
+      },
+      error => console.error('Something wrong happened', error)
+    );
+  }
+
+  showMessage(message) {
+    this.isMessageVisible = true;
+    this.message = message;
+  }
+
+  hideMessage() {
+    this.isMessageVisible = false;
+    this.message = '';
   }
 }

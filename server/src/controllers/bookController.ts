@@ -30,7 +30,7 @@ export class BookController {
   }
 
   public deleteBook(req: Request, res: Response) {
-    Book.remove({ _id: req.params.bookId }, (err, book) => {
+    Book.remove({ _id: req.params.bookId }, err => {
       if (err) res.send(err);
       res.json({ message: 'Successfully deleted book' });
     });
