@@ -15,7 +15,7 @@ export class BookController {
   }
 
   public getBooks(req: Request, res: Response) {
-    Book.find({}, (err, book) => {
+    Book.find({}).sort({ published: -1 }).exec((err, book) => {
       if (err) res.send(err);
       res.json(book);
     });

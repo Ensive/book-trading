@@ -15,10 +15,10 @@ export class AuthService {
   }
 
   all() {
-    return this.http.get(this.getUrl());
+    // return this.http.get(this.getUrl());
   }
 
   create(user) {
-    return this.http.post(this.getUrl(), user);
+    return this.http.post(`${BASE_URL}auth/sign-up`, user);
   }
 }
