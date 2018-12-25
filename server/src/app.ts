@@ -8,7 +8,7 @@ import { Routes } from './routes';
 class App {
   public app: express.Application;
   public routePrv: Routes = new Routes();
-  public mongoUrl: string = 'mongodb://localhost/book-trading';
+  public mongoUrl: string = 'mongodb://localhost:32768/book-trading';
 
   constructor() {
     this.app = express();
