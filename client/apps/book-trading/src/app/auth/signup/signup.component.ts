@@ -18,21 +18,11 @@ export class SignupComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit() {
-    this.authService.all().subscribe(users => {
-      this.allUsersEmails = (users as Array<any>).map(user => user.email);
-    });
-  }
+  ngOnInit() {}
 
   createUser(user) {
-    if (!this.isUserUnique(user.email)) return;
-
     this.authService
       .create(user)
       .subscribe(() => this.router.navigate(['books']));
-  }
-
-  isUserUnique(userEmail) {
-    return this.allUsersEmails.indexOf(userEmail) === -1;
   }
 }
