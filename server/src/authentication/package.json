@@ -1,0 +1,19 @@
+{
+  "name": "authentication",
+  "version": "0.0.1",
+  "description": "Authentication Microservice",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "node",
+    "mongo"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}

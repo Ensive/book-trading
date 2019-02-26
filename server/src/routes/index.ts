@@ -1,10 +1,14 @@
 import { Request, Response } from 'express';
 import { BookController } from '../controllers/bookController';
-import { AuthController } from '../controllers/authController';
+// import { AuthController } from '../controllers/authController';
 
 export class Routes {
+  // constructor () {
+
+  // }
+
   public bookController: BookController = new BookController();
-  public authController: AuthController = new AuthController();
+  // public authController: AuthController = new AuthController();
   public routes(app): void {
     app.route('/').get((req: Request, res: Response) => {
       res.status(200).send({
@@ -19,6 +23,6 @@ export class Routes {
     app.route('/books/:bookId').delete(this.bookController.deleteBook);
 
     // auth
-    app.route('/auth/sign-up').post(this.authController.createUser);
+    // app.route('/auth/sign-up').post(this.authController.createUser);
   }
 }
