@@ -8,6 +8,6 @@
     "outDir": "./dist",
     "baseUrl": "./src"
   },
-  "include": ["src/**/*.ts", "src/authentication/index.js"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "src/authentication"]
 }

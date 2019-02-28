@@ -4,8 +4,11 @@
   "description": "Authentication Microservice",
   "main": "index.js",
   "scripts": {
-    "test": "test",
-    "start": "node index.js"
+    "start": "npm run dev",
+    "dev": "ts-node ./index.ts",
+    "prod": "npm run build && node ./index.js",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "node",
@@ -14,6 +17,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "mongoose": "^5.4.16",
+    "nodemon": "^1.18.10"
+  },
+  "devDependencies": {
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.3333"
   }
 }

@@ -17,12 +17,12 @@
 // - model ???
 // - server
 
-var express = require( 'express' );
+import * as express from 'express';
 // import * as bodyParser from 'body-parser';
-// import * as mongoose from 'mongoose';
 // import * as cors from 'cors';
 
-var Server = require( './server' );
+import Server from './Server';
+import Database from './Database';
 
 // class App {
 //   constructor() {
@@ -30,15 +30,19 @@ var Server = require( './server' );
 //   }
 // }
 
+type ServerResponse = {
+  message: string
+}
+
 function init() {
   const app = express();
   const server = new Server(app);
-  
-  server.run();
+  const database = new Database();
+
+  server.run().then((res: ServerResponse) => {
+    console.log(res.message);
+    database.connect();
+  });
 }
 
 init();
-
-// export default init;
-
-// export default
