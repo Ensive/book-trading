@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-class Database {
+export default class Database {
   private url: string;
 
   constructor(url: string = 'mongodb://localhost:32769/book-trading-auth') {
@@ -12,5 +12,3 @@ class Database {
     console.log('Connected to database');
   }
 }
-
-export default Database;
