@@ -18,11 +18,14 @@
 // - server
 
 import * as express from 'express';
-// import * as bodyParser from 'body-parser';
+import * as bodyParser from 'body-parser';
 // import * as cors from 'cors';
 
 import Server from './Server';
 import Database from './Database';
+import User from './models/User';
+import AuthController from './AuthController';
+import Route from './Route';
 
 // class App {
 //   constructor() {
@@ -30,19 +33,24 @@ import Database from './Database';
 //   }
 // }
 
-type ServerResponse = {
-  message: string
-}
+// type ServerResponse = {
+//   message: string;
+// };
 
 function init() {
   const app = express();
+  app.use(bodyParser.json());
   const server = new Server(app);
   const database = new Database();
+  const authController = new AuthController(createUserApi());
+  const route = new Route(app, authController);
 
-  server.run().then((res: ServerResponse) => {
-    console.log(res.message);
-    database.connect();
-  });
+  server.run();
+  database.connect();
 }
 
 init();
+
+function createUserApi() {
+  return new User();
+}
