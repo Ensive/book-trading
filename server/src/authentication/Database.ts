@@ -8,7 +8,7 @@ export default class Database {
   }
 
   public connect() {
-    mongoose.connect(this.url);
+    mongoose.connect(this.url, { useNewUrlParser: true });
     console.log('Connected to database');
   }
 }
