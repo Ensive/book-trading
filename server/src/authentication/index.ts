@@ -17,40 +17,42 @@
 // - model ???
 // - server
 
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
 // import * as cors from 'cors';
-
+import App from './App';
 import Server from './Server';
 import Database from './Database';
 import User from './models/User';
 import AuthController from './AuthController';
 import Route from './Route';
 
-// class App {
-//   constructor() {
-//     this.app = express();
-//   }
-// }
-
-// type ServerResponse = {
-//   message: string;
-// };
+// genid is not called when session with id from clietn exists
+// session id can be saved into server's memory, we need to overwrite cookie (sending session id from client)
 
 function init() {
-  const app = express();
-  app.use(bodyParser.json());
-  const server = new Server(app);
+  const app = App();
   const database = new Database();
+  database.connect((connection) => {
+    app().setSessionStore(app().app, connection);
+  });
+
+  const server = new Server(app().app);
   const authController = new AuthController(createUserApi());
-  const route = new Route(app, authController);
+  const route = new Route(app().app, authController);
 
   server.run();
-  database.connect();
 }
 
 init();
 
+
+// function setupDb() {
+
+// }
+
 function createUserApi() {
   return new User();
 }
+
+// function setupMiddlware() {
+//   return new MiddlewareSetup(app, dbConnecction);
+// }

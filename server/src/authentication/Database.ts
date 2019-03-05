@@ -7,8 +7,11 @@ export default class Database {
     this.url = url;
   }
 
-  public connect() {
-    mongoose.connect(this.url, { useNewUrlParser: true });
-    console.log('Connected to database');
+  // return a connection
+  public connect(cb) {
+    mongoose.connect(this.url, { useNewUrlParser: true }, () => {
+      console.log('Connected to database');
+      cb(mongoose.connection);
+    });
   }
 }
