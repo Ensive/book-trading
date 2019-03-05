@@ -29,30 +29,22 @@ import Route from './Route';
 // session id can be saved into server's memory, we need to overwrite cookie (sending session id from client)
 
 function init() {
-  const app = App();
+  const app = new App();
+  const express = app.express;
   const database = new Database();
-  database.connect((connection) => {
-    app().setSessionStore(app().app, connection);
+  database.connect(connection => {
+    app.setSessionStore(connection);
   });
 
-  const server = new Server(app().app);
+  const server = new Server(express);
   const authController = new AuthController(createUserApi());
-  const route = new Route(app().app, authController);
+  const route = new Route(express, authController);
 
   server.run();
 }
 
 init();
 
-
-// function setupDb() {
-
-// }
-
 function createUserApi() {
   return new User();
 }
-
-// function setupMiddlware() {
-//   return new MiddlewareSetup(app, dbConnecction);
-// }

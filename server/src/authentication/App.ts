@@ -1,26 +1,29 @@
 import * as express from 'express';
-import * as session from 'express-session';
+import * as expressSession from 'express-session';
 // var FileStore = require('session-file-store')(session);
 import * as ConnectMongo from 'connect-mongo';
-const MongoStore = ConnectMongo(session);
+const MongoStore = ConnectMongo(expressSession);
 import * as uuid from 'uuid';
 import * as bodyParser from 'body-parser';
 
-export default function App() {
-  const app = express();
-  app.use(bodyParser.json());
+let isInitialized = false;
 
-  return function() {
-    return {
-      app,
-      setSessionStore
-    };
-  };
-}
+export default class App {
+  public express;
 
-function setSessionStore(app, connection) {
-  app.use(
-    session({
+  constructor() {
+    if (isInitialized) {
+      return this.express;
+    }
+
+    this.express = express();
+    this.express.use(bodyParser.json());
+
+    isInitialized = true;
+  }
+
+  public setSessionStore(connection) {
+    const session = expressSession({
       genid: () => uuid(),
       store: new MongoStore({
         mongooseConnection: connection
@@ -32,6 +35,8 @@ function setSessionStore(app, connection) {
         maxAge: 600000
       },
       saveUninitialized: true
-    })
-  );
+    });
+
+    this.express.use(session);
+  }
 }
