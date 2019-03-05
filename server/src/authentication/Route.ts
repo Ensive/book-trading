@@ -1,12 +1,13 @@
 import { AuthController } from './AuthController';
 
 const routes = {
-  signup: '/auth/sign-up'
+  signup: '/auth/sign-up',
+  login: '/login'
 };
 
 export default class Route {
   private app;
-  private authController;
+  private authController: AuthController;
 
   constructor(app, authController) {
     this.app = app;
@@ -18,5 +19,17 @@ export default class Route {
     this.app
       .route(routes.signup)
       .post(this.authController.createUser.bind(this.authController));
+
+    this.app.route(routes.login).get((req, res) => {
+      console.log('Inside GET /login callback function');
+      console.log(req.sessionID);
+      res.send(`You got the login page!\n`);
+    });
+
+    this.app.route(routes.login).post((req, res) => {
+      console.log('Inside POST /login callback function');
+      console.log(req.body);
+      res.send(`You posted to the login page!\n`);
+    });
   }
 }

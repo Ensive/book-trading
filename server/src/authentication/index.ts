@@ -48,3 +48,10 @@ init();
 function createUserApi() {
   return new User();
 }
+
+// authentication service methods
+// return instanse of passport from authentication service
+// we should have access to the user model inside authentication service LocalStrategy setup method
+// setAuthentication in App.ts
+// Step 3) Add and configure Passport.js
+// https://medium.com/@evangow/server-authentication-basics-express-sessions-passport-and-curl-359b7456003d
