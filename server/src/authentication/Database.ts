@@ -8,10 +8,16 @@ export default class Database {
   }
 
   // return a connection
-  public connect(cb) {
-    mongoose.connect(this.url, { useNewUrlParser: true }, () => {
-      console.log('Connected to database');
-      cb(mongoose.connection);
-    });
+  public connect(cb: Function) {
+    mongoose
+      .connect(this.url, { useNewUrlParser: true })
+      .then(() => {
+        console.log('Connected to database');
+        cb(mongoose.connection);
+      })
+      .catch(e => {
+        console.log(`Couldn't connect to Mongo DB`);
+        throw e;
+      });
   }
 }
