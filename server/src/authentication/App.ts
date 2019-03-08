@@ -39,4 +39,9 @@ export default class App {
 
     this.express.use(session);
   }
+
+  public setupAuthentication(passport) {
+    this.express.use(passport.initialize());
+    this.express.use(passport.session());
+  }
 }

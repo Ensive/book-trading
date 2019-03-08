@@ -16,6 +16,8 @@ export default class Route {
   }
 
   private setup() {
+    this.app.get('/', (req, res) => {});
+
     this.app
       .route(routes.signup)
       .post(this.authController.createUser.bind(this.authController));
@@ -26,10 +28,14 @@ export default class Route {
       res.send(`You got the login page!\n`);
     });
 
-    this.app.route(routes.login).post((req, res) => {
+    // TODO: use controller method
+    this.app.route(routes.login).post((req, res, next) => {
       console.log('Inside POST /login callback function');
-      console.log(req.body);
-      res.send(`You posted to the login page!\n`);
+      this.authController.login(req, res, next);
+      // console.log(req.body);
+      // res.send(`You posted to the login page!\n`);
     });
   }
 }
+
+
