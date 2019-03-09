@@ -15,7 +15,7 @@ export default class AuthenticationService {
   setup() {
     this.setupLocalStrategy();
     this.setupUserSerializer();
-    // this.setupUserDeserializer();
+    this.setupUserDeserializer();
   }
 
   setupLocalStrategy() {
@@ -30,8 +30,6 @@ export default class AuthenticationService {
   }
 
   matchUser(email, password, done) {
-    console.log('Inside local strategy callback');
-
     // fetch user by email from database
     // if (email === user.email && password === user.password) {
     if (true) {
@@ -41,35 +39,30 @@ export default class AuthenticationService {
 
   setupUserSerializer() {
     this.passport.serializeUser((user, done) => {
-      console.log('Inside serializeUser callback. User id is save to the session file store here');
-      console.log('user.id', user.id)
       done(null, user.id);
+    });
+  }
+
+  setupUserDeserializer() {
+    passport.deserializeUser((id, done) => {
+      console.log('Inside deserializeUser callback');
+      console.log(`The user id passport saved in the session file store is: ${id}`);
+      // const user = users[0].id === id ? users[0] : false;
+      // TODO: hardcoded
+      const user = { id: '2f24vvg', email: 'test@test.com', password: 'password' };
+      done(null, user);
     });
   }
 
   authenticate(req, res, next, strategy = 'local') {
     this.passport.authenticate(strategy, (err, user, info) => {
-      console.log('Inside passport.authenticate() callback');
-      console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`);
-      console.log(`req.user: ${JSON.stringify(req.user)}`);
-      console.log('====================================');
-      console.log('VOT ON', user);
-      console.log('====================================');
       req.login(user, err => this.handleLogin.call(this, err, req, res));
     })(req, res, next);
   }
 
-  handleAuthenticate() {
-
-  }
+  handleAuthenticate() {}
 
   handleLogin(err, req, res) {
-    console.log('====================================');
-    console.log(arguments.length);
-    console.log('====================================');
-    console.log('Inside req.login() callback');
-    console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`);
-    console.log(`req.user: ${JSON.stringify(req.user)}`);
     return res.send('You were authenticated & logged in!\n');
   }
 }
