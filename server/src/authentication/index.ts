@@ -34,20 +34,22 @@ function init() {
   const express = app.express;
   const database = new Database();
 
-  database.connect(dbConnection => {
-    app.setSessionStore(dbConnection);
-    const authenticationService = new AuthenticationService(createUserApi());
-    app.setupAuthentication(authenticationService.passport);
-
-    const server = new Server(express);
-    const authController = new AuthController(createUserApi(), authenticationService);
-    const route = new Route(express, authController);
-
-    server.run();
-  });
+  database.connect(dbConnection => onDatabaseConnect({ dbConnection, app, express }));
 }
 
 init();
+
+function onDatabaseConnect({ dbConnection, app, express }) {
+  app.setSessionStore(dbConnection);
+  const authenticationService = new AuthenticationService(createUserApi());
+  app.setupAuthentication(authenticationService.passport);
+
+  const server = new Server(express);
+  const authController = new AuthController(createUserApi(), authenticationService);
+  const route = new Route(express, authController);
+
+  server.run();
+}
 
 function createUserApi() {
   return new User();
