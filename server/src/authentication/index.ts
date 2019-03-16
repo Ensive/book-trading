@@ -46,7 +46,7 @@ function onDatabaseConnect({ dbConnection, app, express }) {
 
   const server = new Server(express);
   const authController = new AuthController(createUserApi(), authenticationService);
-  const route = new Route(express, authController);
+  new Route(express, authController);
 
   server.run();
 }
