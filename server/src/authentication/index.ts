@@ -12,19 +12,21 @@ function init() {
   const app = new App();
   const express = app.express;
   const database = new Database();
+
+  database.connect(dbConnection => onDatabaseConnect({ dbConnection, app, express }));
+}
+
+function onDatabaseConnect({ dbConnection, app, express }) {
   const userApi = createUserApi();
+  app.setSessionStore(dbConnection);
+  const authenticationService = new AuthenticationService(userApi);
+  app.setupAuthentication(authenticationService.passport);
 
-  database.connect(dbConnection => {
-    app.setSessionStore(dbConnection);
-    const authenticationService = new AuthenticationService(userApi);
-    app.setupAuthentication(authenticationService.passport);
+  const server = new Server(express);
+  const authController = new AuthController(userApi, authenticationService);
+  new Route(express, authController);
 
-    const server = new Server(express);
-    const authController = new AuthController(userApi, authenticationService);
-    new Route(express, authController);
-
-    server.run();
-  });
+  server.run();
 }
 
 function createUserApi() {
