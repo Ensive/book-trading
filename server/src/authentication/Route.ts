@@ -23,7 +23,9 @@ export default class Route {
       res.end('You got homepage!');
     });
 
-    this.app.route(routes.signup).post(this.authController.createUser.bind(this.authController));
+    this.app
+      .route(routes.signup)
+      .post(this.authController.createUser.bind(this.authController));
 
     this.app.route(routes.login).get((req, res) => {
       res.send(`You got the login page!\n`);
@@ -37,7 +39,7 @@ export default class Route {
     this.app.route(routes.authrequired).get((req, res) => {
       console.log('Inside GET /authrequired callback');
       console.log(`User authenticated? ${req.isAuthenticated()}`);
-      
+
       if (req.isAuthenticated()) {
         res.send('you hit the authentication endpoint\n');
       } else {

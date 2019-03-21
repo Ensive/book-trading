@@ -1,16 +1,10 @@
 import * as mongoose from 'mongoose';
 
-let isInitialized = false;
-
 export default class User {
   public model;
   private schema;
 
   constructor() {
-    if (isInitialized) {
-      return this;
-    }
-
     this.setup();
   }
 
@@ -38,8 +32,6 @@ export default class User {
     this.setMethods();
     this.setHooks();
     this.setModel();
-
-    isInitialized = true;
   }
 
   private setSchema() {
