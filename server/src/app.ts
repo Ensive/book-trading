@@ -32,4 +32,11 @@ class App {
   }
 }
 
+// new Database({
+//   url:
+//   connectionMethod: () => {
+
+//   }
+// })
+
 export default new App().app;

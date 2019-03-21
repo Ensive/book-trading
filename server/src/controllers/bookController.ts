@@ -15,16 +15,17 @@ export class BookController {
   }
 
   public getBooks(req: Request, res: Response) {
-    Book.find({}).sort({ published: -1 }).exec((err, book) => {
-      if (err) res.send(err);
-      res.json(book);
-    });
+    Book.find({})
+      .sort({ published: -1 })
+      .exec((err, book) => {
+        if (err) res.send(err);
+        res.json(book);
+      });
   }
 
   public getBookWithID(req: Request, res: Response) {
     Book.findById(req.params.bookId, (err, book) => {
       if (err) res.send(err);
-      console.log('book', book);
       res.json(book);
     });
   }
