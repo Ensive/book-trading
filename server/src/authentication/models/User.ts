@@ -1,7 +1,5 @@
 import * as mongoose from 'mongoose';
 
-let isInitialized = false;
-
 export default class User {
   public model;
   private schema;
@@ -34,8 +32,6 @@ export default class User {
     this.setMethods();
     this.setHooks();
     this.setModel();
-
-    isInitialized = true;
   }
 
   private setSchema() {
@@ -77,11 +73,3 @@ export default class User {
     this.model = mongoose.model('User', this.schema);
   }
 }
-
-// export default function createUserModel() {
-//   const userModel = new User();
-//   if (isInitialized) {
-//     return userModel;
-//   }
-//   return new User;
-// }
