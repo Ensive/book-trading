@@ -24,7 +24,11 @@ export default class App {
 
   public setSessionStore(connection) {
     const session = expressSession({
-      genid: () => uuid(),
+      genid: req => {
+        console.log('Inside session middleware genid function');
+        console.log(`Request object sessionID from client: ${req.sessionID}`);
+        return uuid();
+      },
       store: new MongoStore({
         mongooseConnection: connection
       }),
@@ -38,5 +42,10 @@ export default class App {
     });
 
     this.express.use(session);
+  }
+
+  public setupAuthentication(passport) {
+    this.express.use(passport.initialize());
+    this.express.use(passport.session());
   }
 }

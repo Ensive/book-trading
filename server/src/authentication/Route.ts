@@ -2,7 +2,8 @@ import { AuthController } from './AuthController';
 
 const routes = {
   signup: '/auth/sign-up',
-  login: '/login'
+  login: '/login',
+  authrequired: '/authrequired'
 };
 
 export default class Route {
@@ -16,20 +17,32 @@ export default class Route {
   }
 
   private setup() {
-    this.app
-      .route(routes.signup)
-      .post(this.authController.createUser.bind(this.authController));
+    this.app.get('/', (req, res) => {
+      console.log('Inside the homepage callback');
+      console.log(req.sessionID);
+      res.end('You got homepage!');
+    });
+
+    this.app.route(routes.signup).post(this.authController.createUser.bind(this.authController));
 
     this.app.route(routes.login).get((req, res) => {
-      console.log('Inside GET /login callback function');
-      console.log(req.sessionID);
       res.send(`You got the login page!\n`);
     });
 
-    this.app.route(routes.login).post((req, res) => {
-      console.log('Inside POST /login callback function');
-      console.log(req.body);
-      res.send(`You posted to the login page!\n`);
+    // TODO: use controller method
+    this.app.route(routes.login).post((req, res, next) => {
+      this.authController.login(req, res, next);
+    });
+
+    this.app.route(routes.authrequired).get((req, res) => {
+      console.log('Inside GET /authrequired callback');
+      console.log(`User authenticated? ${req.isAuthenticated()}`);
+      
+      if (req.isAuthenticated()) {
+        res.send('you hit the authentication endpoint\n');
+      } else {
+        res.redirect('/');
+      }
     });
   }
 }

@@ -30,9 +30,11 @@ export interface AuthController {
 
 export default class {
   private User;
+  private authenticationService;
 
-  constructor(User) {
+  constructor(User, authenticationService) {
     this.User = User;
+    this.authenticationService = authenticationService;
   }
 
   public createUser(request, response) {
@@ -48,7 +50,9 @@ export default class {
 
   public deleteUser() {}
 
-  public login() {}
+  public login(req, res, next) {
+    this.authenticationService.authenticate(req, res, next);
+  }
 
   public logout() {}
 }
