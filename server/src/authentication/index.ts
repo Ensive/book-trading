@@ -33,14 +33,15 @@ function init() {
   const app = new App();
   const express = app.express;
   const database = new Database();
+  const userApi = createUserApi();
 
   database.connect(dbConnection => {
     app.setSessionStore(dbConnection);
-    const authenticationService = new AuthenticationService(createUserApi());
+    const authenticationService = new AuthenticationService(userApi);
     app.setupAuthentication(authenticationService.passport);
 
     const server = new Server(express);
-    const authController = new AuthController(createUserApi(), authenticationService);
+    const authController = new AuthController(userApi, authenticationService);
     const route = new Route(express, authController);
 
     server.run();

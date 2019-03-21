@@ -7,10 +7,6 @@ export default class User {
   private schema;
 
   constructor() {
-    if (isInitialized) {
-      return this;
-    }
-
     this.setup();
   }
 
@@ -81,3 +77,11 @@ export default class User {
     this.model = mongoose.model('User', this.schema);
   }
 }
+
+// export default function createUserModel() {
+//   const userModel = new User();
+//   if (isInitialized) {
+//     return userModel;
+//   }
+//   return new User;
+// }
