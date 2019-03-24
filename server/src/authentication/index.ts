@@ -17,18 +17,23 @@ function init() {
 }
 
 function onDatabaseConnect({ dbConnection, app, express }) {
-  const userApi = createUserApi();
   app.setSessionStore(dbConnection);
+
+  const userApi = createUserApi();
   const authenticationService = new AuthenticationService(userApi);
   app.setupAuthentication(authenticationService.passport);
 
-  const server = new Server(express);
   const authController = new AuthController(userApi, authenticationService);
-  new Route(express, authController);
+  initRouting(express, authController);
 
+  const server = new Server(express);
   server.run();
 }
 
 function createUserApi() {
   return new User();
+}
+
+function initRouting(express, authController) {
+  new Route(express, authController);
 }
